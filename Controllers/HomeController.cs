@@ -64,8 +64,21 @@ namespace PoliziaApp.Controllers
         public IActionResult Add(string first_name, string last_name, string address, string cap, string city, string cf)
         {
             SqlConnection con = new SqlConnection(connectionString);
+            int codice;
             try
             {
+                if (!int.TryParse(cap, out codice))
+                {
+                    throw new Exception("Inserire un codice postale valido.");
+                }
+
+                string pattern = "^([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})$|([0-9]{11})$";
+                Regex rg = new Regex(pattern);
+                if (!rg.IsMatch(cf))
+                {
+                    throw new Exception("Inserire un Codice Fiscale valido.");
+                }
+
                 con.Open();
                 SqlCommand insert = new SqlCommand("insert into Anagrafica (Nome, Cognome, Indirizzo, Città, CAP, CodiceFiscale)" +
                     "values (@name, @surname, @address, @city, @cap, @cf)", con);
@@ -73,8 +86,8 @@ namespace PoliziaApp.Controllers
                 insert.Parameters.AddWithValue("@surname", last_name);
                 insert.Parameters.AddWithValue("@address", address);
                 insert.Parameters.AddWithValue("@city", city);
-                insert.Parameters.AddWithValue("@cap", cap.Replace(" ", "").Substring(0, 5));
-                insert.Parameters.AddWithValue("@cf", cap.Replace(" ", "").Substring(0, 16));
+                insert.Parameters.AddWithValue("@cap", cap);
+                insert.Parameters.AddWithValue("@cf", cf);
                 insert.ExecuteNonQuery();
 
             }
