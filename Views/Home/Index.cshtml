@@ -1,0 +1,136 @@
+﻿@model List<PoliziaApp.Models.Nominativo>
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+<div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddModal">
+        Nuovo
+    </button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Cognome</th>
+                <th scope="col">Indirizzo</th>
+                <th scope="col">Città</th>
+                <th scope="col">CAP</th>
+                <th scope="col">Codice Fiscale</th>
+                <th scope="col">Controlli</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Nominativo persona in Model)
+            {
+                <tr>
+                    <th scope="row">@persona.Id</th>
+                    <td>@persona.Nome</td>
+                    <td>@persona.Cognome</td>
+                    <td>@persona.Indirizzo</td>
+                    <td>@persona.Città</td>
+                    <td>@persona.CAP</td>
+                    <td>@persona.CodiceFiscale</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#NewVerbale_@persona.Id">
+                            Fai un Verbale
+                        </button>
+
+                        <div class="modal fade" id="NewVerbale_@persona.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuovo Verbale</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form asp-controller="Home" asp-action="Verbale" asp-route-id="@persona.Id" method="post">
+                                        <label for="Nominativo">Nominativo:</label>
+                                        <input type="text" disabled name="Nominativo"  value="@persona.Nome @persona.Cognome"/>
+
+                                        <input type="hidden" name="IdNominativo" value="@persona.Id" />
+
+                                        <label for="DataViolazione">Data Violazione:</label>
+                                        <input type="date" name="DataViolazione" />
+
+                                        <label for="address">Indirizzo Violazione:</label>
+                                        <input type="text" name="address" />
+
+                                        <input type="hidden" name="DataTrascrizioneVerbale" value="@DateTime.Now" />
+
+                                        <label for="Importo">Importo:</label>
+                                        <input type="number" step="0.01" name="Importo" />
+
+                                        <label for="DecurtamentoPunti">Punti Decurtati:</label>
+                                        <input type="number" name="DecurtamentoPunti" />
+
+                                        <label for="TipoViolazione">Tipo Violazione:</label>
+                                        <select class="form-select" aria-label="Default select example" name="TipoViolazione">
+                                            <option value="Passaggio con semaforo rosso">Passaggio con semaforo rosso</option>
+                                            <option value="Autovelox">Autovelox</option>
+                                            <option value="Passaggio non autorizzato">Passaggio non autorizzato</option>
+                                        </select>
+
+                                        <label for="fullName">NominativoAgente:</label>
+                                        <input type="text" name="fullName" />
+
+                                        
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                            <input type="hidden" name="Id" value="@persona.Id" />
+                                            <button type="submit" class="btn btn-primary">Aggiungi</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form asp-controller="Home" asp-action="Add" method="post">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuovo Elemento</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="first_name">Nome:</label>
+                        <input type="text" name="first_name" />
+
+                        <label for="last_name">Cognome:</label>
+                        <input type="text" name="last_name" />
+
+                        <label for="address">Indirizzo:</label>
+                        <input type="text" name="address" />
+
+                        <label for="city">Città:</label>
+                        <input type="text" name="city" />
+
+                        <label for="cap">CAP:</label>
+                        <input type="text" name="cap" />
+
+                        <label for="cf">Codice Fiscale:</label>
+                        <input type="text" name="cf" />
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Indietro</button>
+                        <button type="submit" class="btn btn-primary">Aggiungi</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
