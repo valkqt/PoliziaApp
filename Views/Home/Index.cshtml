@@ -1,15 +1,38 @@
 ﻿@model List<PoliziaApp.Models.Nominativo>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
+    bool error = (bool)(TempData["error"] ?? false);
+    bool success = (bool)(TempData["success"] ?? false);
+    string exception = (string)TempData["exception"] ?? "";
+    string infoMsg = (string)TempData["infomsg"] ?? "";
 
 }
 
-<div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddModal">
+<div class="CustomTable">
+
+
+    <button type="button" class="btn btn-primary AddButton" data-bs-toggle="modal" data-bs-target="#AddModal">
         Nuovo
     </button>
 
-    <table class="table">
+    @if (success)
+    {
+        <div class="alert CustomAlert" role="alert" id="infoMsg">
+            @infoMsg
+        </div>
+
+    }
+
+
+    @if (error)
+    {
+        <div class="alert CustomAlert" role="alert" id="errMsg">
+            @exception
+        </div>
+    }
+
+
+    <table class="table ">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -35,7 +58,7 @@
                     <td>@persona.CAP</td>
                     <td>@persona.CodiceFiscale</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#NewVerbale_@persona.Id">
+                        <button type="button" class="btn btn-primary AddButton" data-bs-toggle="modal" data-bs-target="#NewVerbale_@persona.Id">
                             Fai un Verbale
                         </button>
 
@@ -46,37 +69,41 @@
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Nuovo Verbale</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+
                                     <form asp-controller="Home" asp-action="Verbale" asp-route-id="@persona.Id" method="post">
-                                        <label for="Nominativo">Nominativo:</label>
-                                        <input type="text" disabled name="Nominativo"  value="@persona.Nome @persona.Cognome"/>
+                                        <div class="modal-body">
 
-                                        <input type="hidden" name="IdNominativo" value="@persona.Id" />
+                                            <label for="Nominativo">Nominativo:</label>
+                                            <input type="text" disabled name="Nominativo" value="@persona.Nome @persona.Cognome" />
 
-                                        <label for="DataViolazione">Data Violazione:</label>
-                                        <input type="date" name="DataViolazione" />
+                                            <input type="hidden" name="IdNominativo" value="@persona.Id" />
 
-                                        <label for="address">Indirizzo Violazione:</label>
-                                        <input type="text" name="address" />
+                                            <label for="DataViolazione">Data Violazione:</label>
+                                            <input type="date" name="DataViolazione" />
 
-                                        <input type="hidden" name="DataTrascrizioneVerbale" value="@DateTime.Now" />
+                                            <label for="address">Indirizzo Violazione:</label>
+                                            <input type="text" name="address" />
 
-                                        <label for="Importo">Importo:</label>
-                                        <input type="number" step="0.01" name="Importo" />
+                                            <input type="hidden" name="DataTrascrizioneVerbale" value="@DateTime.Now" />
 
-                                        <label for="DecurtamentoPunti">Punti Decurtati:</label>
-                                        <input type="number" name="DecurtamentoPunti" />
+                                            <label for="Importo">Importo:</label>
+                                            <input type="number" step="0.01" name="Importo" />
 
-                                        <label for="TipoViolazione">Tipo Violazione:</label>
-                                        <select class="form-select" aria-label="Default select example" name="TipoViolazione">
-                                            <option value="Passaggio con semaforo rosso">Passaggio con semaforo rosso</option>
-                                            <option value="Autovelox">Autovelox</option>
-                                            <option value="Passaggio non autorizzato">Passaggio non autorizzato</option>
-                                        </select>
+                                            <label for="DecurtamentoPunti">Punti Decurtati:</label>
+                                            <input type="number" name="DecurtamentoPunti" />
 
-                                        <label for="fullName">NominativoAgente:</label>
-                                        <input type="text" name="fullName" />
+                                            <label for="TipoViolazione">Tipo Violazione:</label>
+                                            <select class="form-select" aria-label="Default select example" name="TipoViolazione">
+                                                <option value="Passaggio con semaforo rosso">Passaggio con semaforo rosso</option>
+                                                <option value="Autovelox">Autovelox</option>
+                                                <option value="Passaggio non autorizzato">Passaggio non autorizzato</option>
+                                            </select>
 
-                                        
+                                            <label for="fullName">NominativoAgente:</label>
+                                            <input type="text" name="fullName" />
+                                        </div>
+
+
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
@@ -105,10 +132,10 @@
                     </div>
                     <div class="modal-body">
                         <label for="first_name">Nome:</label>
-                        <input type="text" name="first_name" />
+                        <input type="text" name="first_name" required />
 
                         <label for="last_name">Cognome:</label>
-                        <input type="text" name="last_name" />
+                        <input type="text" name="last_name" required />
 
                         <label for="address">Indirizzo:</label>
                         <input type="text" name="address" />
@@ -134,3 +161,8 @@
     </div>
 
 </div>
+<script>
+    window.setTimeout(() => { document.getElementById("errMsg").style.display = "none" }, 2000);
+    window.setTimeout(() => { document.getElementById("infoMsg").style.display = "none" }, 2000);
+
+</script>

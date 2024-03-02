@@ -50,6 +50,10 @@ namespace PoliziaApp.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = true;
+                TempData["exception"] = ex.Message;
+
+
                 Console.WriteLine(ex.Message);
             }
             finally
@@ -93,12 +97,17 @@ namespace PoliziaApp.Controllers
             }
             catch (Exception ex)
             {
+                TempData["error"] = true;
+                TempData["exception"] = ex.Message;
                 Console.WriteLine(ex.Message);
             }
             finally
             {
                 con.Close();
             }
+
+            TempData["success"] = true;
+            TempData["infomsg"] = "Inserimento avvenuto con successo.";
 
             return RedirectToAction("Index");
         }
@@ -123,16 +132,25 @@ namespace PoliziaApp.Controllers
                 insert.Parameters.AddWithValue("@NominativoAgente", fullName);
 
                 insert.ExecuteNonQuery();
+                TempData["success"] = true;
+                TempData["infomsg"] = "Inserimento avvenuto con successo.";
+
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                TempData["error"] = true;
+
+                TempData["exception"] = ex.Message;
+
             }
             finally
             {
                 con.Close();
             }
+
+
 
             return RedirectToAction("Index");
         }

@@ -49,6 +49,7 @@ namespace PoliziaApp.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+
             }
             finally
             {
@@ -67,7 +68,7 @@ namespace PoliziaApp.Controllers
             try
             {
                 con.Open();
-                SqlCommand select = new SqlCommand($"select Anagrafica.Nome, Anagrafica.Cognome, * from Verbali " +
+                SqlCommand select = new SqlCommand($"select Anagrafica.Nome, Anagrafica.Cognome, Verbali.* from Verbali " +
                     $"inner join Anagrafica on Verbali.Nominativo = Anagrafica.id " +
                     $"where DataTrascrizioneVerbale between  DATEADD(MONTH, -1, GETDATE()) and GETDATE();", con);
                 SqlDataReader reader = select.ExecuteReader();
@@ -161,7 +162,7 @@ namespace PoliziaApp.Controllers
             try
             {
                 con.Open();
-                SqlCommand select = new SqlCommand($"select Nome, Cognome, * from Verbali " +
+                SqlCommand select = new SqlCommand($"select * from Verbali " +
                     $"inner join Anagrafica on Verbali.Nominativo = Anagrafica.id " +
                     $"where Importo > 400", con);
                 SqlDataReader reader = select.ExecuteReader();

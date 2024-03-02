@@ -1,26 +1,32 @@
 ﻿@model List<PoliziaApp.Models.PuntiPerPersona>
 
 @{
+    ViewData["Title"] = "Verbali";
+
 }
+<div class="CustomTable">
+    <h1 class="text-center">Totale punti decurtati per persona</h1>
+    <hr />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Nominativo</th>
-            <th scope="col">Punti Decurtati</th>
-
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (PuntiPerPersona verbale in Model)
-        {
+    <table class="table ">
+        <thead>
             <tr>
-                <td>@verbale.Nome @verbale.Cognome</td>
-                <td>@verbale.PuntiDecurtati</td>
+                <th scope="col">Nominativo</th>
+                <th scope="col">Punti Decurtati</th>
+
 
             </tr>
+        </thead>
+        <tbody>
+            @foreach (PuntiPerPersona verbale in Model)
+            {
+                <tr>
+                    <td>@verbale.Nome @verbale.Cognome</td>
+                    <td>@verbale.PuntiDecurtati</td>
 
-        }
-    </tbody>
-</table>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

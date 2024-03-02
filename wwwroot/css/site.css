@@ -1,27 +1,85 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
+}
+
+* {
+    font-family: Tahoma, sans-serif;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #6666dc;
 }
 
 input, label {
     display: block;
     width: 100%;
 }
+
+.CustomAlert {
+    width: 600px;
+    height: 100px;
+    position: fixed;
+    top: 2rem;
+    margin: 0 auto;
+    right: calc(50vw - 300px);
+    border: 1px solid black;
+    color: black;
+}
+
+#errMsg {
+    background-color: #fdbaba;
+}
+
+#infoMsg {
+    background-color: #cfffd9;
+}
+
+.CustomNavbar {
+    background-color: #232379;
+}
+
+    .CustomNavbar a {
+        color: rgb(245 245 255) !important;
+    }
+
+        .CustomNavbar a:hover {
+            color: #6D6DB6 !important
+        }
+
+main {
+    padding: 0 !important;
+}
+
+.CustomTable {
+    background-color: #cbcbff;
+    padding: 1rem;
+}
+
+.AddButton {
+    display: block;
+    width: 125px;
+    margin: 1rem auto;
+    background-color: #232379 !important;
+    color: rgb(245 245 255) !important;
+    outline: 0;
+    border: 0;
+}
+
+    .AddButton:hover {
+        background-color: #6D6DB6 !important;
+    }

@@ -1,9 +1,15 @@
 ﻿@model List<PoliziaApp.Models.Verbale>
 
 @{
+    ViewData["Title"] = "Verbali Contestabili";
+
 }
 
-<table class="table">
+<div class="CustomTable">
+    <h1 class="text-center">Verbali emessi nell'ultimo mese</h1>
+    <hr />
+
+<table class="table ">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -37,3 +43,4 @@
         }
     </tbody>
 </table>
+</div>

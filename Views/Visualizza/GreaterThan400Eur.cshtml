@@ -1,7 +1,12 @@
 ﻿@model List<PoliziaApp.Models.Verbale>
 
 @{
+    ViewData["Title"] = "Verbali";
+
 }
+<div class="CustomTable">
+    <h1 class="text-center">Verbali con importo superiore a 400 Eur</h1>
+    <hr />
 
 <table class="table">
     <thead>
@@ -37,3 +42,4 @@
         }
     </tbody>
 </table>
+</div>
